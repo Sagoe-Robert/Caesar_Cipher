@@ -10,9 +10,7 @@ class EncryptionProgram:
         self.symbols = string.punctuation
         
     def generate_key(self, method: str = "auto") -> str:
-        """Generate encryption key based on method"""
         if method == "auto":
-            # Generate a random numeric key
             key = str(random.randint(1, 25))
             return key
         elif method == "manual":
@@ -21,7 +19,6 @@ class EncryptionProgram:
             return "13"
     
     def caesar_cipher(self, text: str, key: str, encrypt: bool = True) -> str:
-        """Caesar cipher encryption/decryption"""
         try:
             shift = int(key) % 26
             if not encrypt:
@@ -30,9 +27,7 @@ class EncryptionProgram:
             result = ""
             for char in text:
                 if char.isalpha():
-                    # Determine the alphabet to use
-                    alphabet = self.alphabet_upper if char.isupper() else self.alphabet
-                    # Find position and apply shift
+                    alphabet = self.alphabet_upper if char.isupper() else self.alphabet           
                     position = alphabet.find(char)
                     new_position = (position + shift) % 26
                     result += alphabet[new_position]
@@ -45,7 +40,6 @@ class EncryptionProgram:
 
     
     def encrypt_message(self, message: str, key: str = None) -> Dict: # type: ignore
-        """Encrypt a message using Caesar cipher"""
         if key is None:
             key = self.generate_key()
         
@@ -59,7 +53,6 @@ class EncryptionProgram:
         }
     
     def decrypt_message(self, encrypted_message: str, key: str) -> Dict:
-        """Decrypt a message using Caesar cipher"""
         decrypted_text = self.caesar_cipher(encrypted_message, key, encrypt=False)
         
         return {
@@ -70,11 +63,10 @@ class EncryptionProgram:
         }
 
 def main():
-    """Main program interface"""
     program = EncryptionProgram()
     
     print(" ENCRYPTION PROGRAM ")
-    print("=" * 40)
+    print("=" * 30)
     
     while True:
         print("\nOptions:")
@@ -85,7 +77,6 @@ def main():
         choice = input("\nEnter your choice (1-3): ").strip()
         
         if choice == "1":
-            # Encryption
             print("\n--- ENCRYPTION ---")
             message = input("Enter the message to encrypt: ")
             
@@ -114,7 +105,6 @@ def main():
                 print(f" Error: {result['error']}")
                 
         elif choice == "2":
-            # Decryption
             print("\n--- DECRYPTION ---")
             encrypted_message = input("Enter the encrypted message: ")
             key = input("Enter the decryption key (1-25): ")
@@ -137,4 +127,5 @@ def main():
             print("Invalid choice! Please enter 1, 2, or 3.")
 
 if __name__ == "__main__":
+
     main() 
